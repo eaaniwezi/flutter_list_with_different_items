@@ -1,12 +1,10 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter_list_with_different_items/models/bonus_model_class.dart';
 import 'package:flutter_list_with_different_items/models/grade_model_class.dart';
 import 'package:flutter_list_with_different_items/models/profit_model_class.dart';
 import 'package:flutter_list_with_different_items/models/refill_model_class.dart';
 import 'package:flutter_list_with_different_items/repositories/api_endpoints.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:logger/logger.dart';
-import 'package:http/http.dart' as http;
 
 class DashBoardRepository {
   Map<String, String>? headers = {
@@ -19,8 +17,6 @@ class DashBoardRepository {
     final response =
         await http.get(Uri.parse(ApiEndpoints.grade), headers: headers);
     var data = jsonDecode(response.body);
-    var log = Logger();
-    log.w(data);
     return GradeModelClass.fromJson(data);
   }
 

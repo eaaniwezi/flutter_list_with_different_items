@@ -1,8 +1,10 @@
 import 'dart:math' as math;
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_list_with_different_items/bloc/dash_board_bloc.dart';
 import 'package:flutter_list_with_different_items/models/refill_model_class.dart';
+import 'package:logger/logger.dart';
 
 class RefillDashBoard extends StatelessWidget {
   const RefillDashBoard({Key? key}) : super(key: key);
@@ -14,7 +16,6 @@ class RefillDashBoard extends StatelessWidget {
         if (state is DashBoardLoadedState) {
           RefillModelClass refillModelClass = state.refillModelClass;
           return Container(
-          
             height: MediaQuery.of(context).size.height * 0.25,
             decoration: BoxDecoration(
               color: Colors.indigo[200],
@@ -28,7 +29,9 @@ class RefillDashBoard extends StatelessWidget {
                 children: [
                   _firstColumn(),
                   Text(
-                    refillModelClass.total.toString() + "\$",
+                    NumberFormat.decimalPattern()
+                            .format(refillModelClass.total) +
+                        " \$",
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 24,
@@ -46,7 +49,9 @@ class RefillDashBoard extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            refillModelClass.refillUSD.toString() + "\$",
+                            NumberFormat.decimalPattern()
+                                    .format(refillModelClass.refillUSD) +
+                                " \$",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -78,7 +83,9 @@ class RefillDashBoard extends StatelessWidget {
                                 TextStyle(color: Colors.black54, fontSize: 13),
                           ),
                           Text(
-                            refillModelClass.refillRUB.toString() + "₽",
+                            NumberFormat.decimalPattern()
+                                    .format(refillModelClass.refillRUB) +
+                                " ₽",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 13,
@@ -99,7 +106,9 @@ class RefillDashBoard extends StatelessWidget {
                                 TextStyle(color: Colors.black54, fontSize: 13),
                           ),
                           Text(
-                            refillModelClass.withdrawn.toString() + "₽",
+                            NumberFormat.decimalPattern()
+                                    .format(refillModelClass.withdrawn) +
+                                " ₽",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 13,

@@ -2,8 +2,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_list_with_different_items/bloc/dash_board_bloc.dart';
-import 'package:flutter_list_with_different_items/models/profit_model_class.dart';
+import 'package:flutter_list_with_different_items/models/grade_model_class.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class GradeDashBoard extends StatelessWidget {
   const GradeDashBoard({Key? key}) : super(key: key);
@@ -12,9 +14,11 @@ class GradeDashBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DashBoardBloc, DashBoardState>(
       builder: (context, state) {
-       if (state is DashBoardLoadedState) {
-          ProfitModelClass profitModelClass = state.profitModelClass;
-          String differences = profitModelClass.raise.toString();
+        if (state is DashBoardLoadedState) {
+          GradeModelClass gradeModelClass = state.gradeModelClass;
+          String differences = gradeModelClass.raise.toString();
+          var percentValue =
+              (gradeModelClass.balanceUSD / gradeModelClass.total) * 1;
           return Container(
             height: MediaQuery.of(context).size.height * 0.25,
             decoration: BoxDecoration(
@@ -29,7 +33,9 @@ class GradeDashBoard extends StatelessWidget {
                 children: [
                   _firstColumn(),
                   Text(
-                    profitModelClass.total.toString() + "\$",
+                    NumberFormat.decimalPattern()
+                            .format(gradeModelClass.total) +
+                        " \$",
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 24,
@@ -39,7 +45,9 @@ class GradeDashBoard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        profitModelClass.raise.toString() + "%",
+                        NumberFormat.decimalPattern()
+                                .format(gradeModelClass.raise) +
+                            "%",
                         style: TextStyle(
                           color: differences.contains("-")
                               ? Colors.red
@@ -56,19 +64,40 @@ class GradeDashBoard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 25),
+                  Transform.rotate(
+                    angle: 180 * math.pi / 180,
+                    child: LinearPercentIndicator(
+                      width: MediaQuery.of(context).size.width * 0.85,
+                      lineHeight: 16.0,
+                      percent: percentValue,
+                      backgroundColor: Colors.indigo,
+                      progressColor: Colors.teal[300],
+                    ),
+                  ),
                   const SizedBox(height: 20),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Container(
+                            height: 8,
+                            width: 8,
+                            decoration: BoxDecoration(
+                                color: Colors.indigo,
+                                borderRadius: BorderRadius.circular(5)),
+                          ),
+                          const SizedBox(height: 4),
                           const Text(
-                            "Ивестировано",
+                            "В акциях",
                             style:
                                 TextStyle(color: Colors.black54, fontSize: 13),
                           ),
                           Text(
-                            profitModelClass.invest.toString() + "\$",
+                            NumberFormat.decimalPattern()
+                                    .format(gradeModelClass.stock) +
+                                " \$",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 13,
@@ -77,19 +106,53 @@ class GradeDashBoard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Container(
+                            height: 8,
+                            width: 8,
+                            decoration: BoxDecoration(
+                                color: Colors.teal[300],
+                                borderRadius: BorderRadius.circular(5)),
+                          ),
+                          const SizedBox(height: 4),
                           const Text(
-                            "Общая стоимость",
+                            "Остаток USD",
                             style:
                                 TextStyle(color: Colors.black54, fontSize: 13),
                           ),
                           Text(
-                            profitModelClass.price.toString() + "\$",
+                            NumberFormat.decimalPattern()
+                                    .format(gradeModelClass.balanceUSD) +
+                                " \$",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 8,
+                            width: 8,
+                            decoration: BoxDecoration(
+                                color: Colors.yellow,
+                                borderRadius: BorderRadius.circular(5)),
+                          ),
+                          const SizedBox(height: 4),
+                          const Text(
+                            "Остаток RUB",
+                            style:
+                                TextStyle(color: Colors.black54, fontSize: 13),
+                          ),
+                          Text(
+                              NumberFormat.decimalPattern()
+                                .format(gradeModelClass.balanceRUB)  + " ₽",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 13,
@@ -121,7 +184,7 @@ class GradeDashBoard extends StatelessWidget {
     return Row(
       children: [
         const Text(
-          "Прибыль с акций",
+          "Оценка портфеля",
           style: TextStyle(color: Colors.black54, fontSize: 13),
         ),
         Spacer(),

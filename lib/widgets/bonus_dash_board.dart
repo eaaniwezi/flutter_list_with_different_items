@@ -4,15 +4,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_list_with_different_items/bloc/dash_board_bloc.dart';
 import 'package:flutter_list_with_different_items/models/bonus_model_class.dart';
+import 'package:intl/intl.dart';
 
-class BonusDashBoard extends StatelessWidget {
+class BonusDashBoard extends StatefulWidget {
   const BonusDashBoard({Key? key}) : super(key: key);
 
+  @override
+  State<BonusDashBoard> createState() => _BonusDashBoardState();
+}
+
+class _BonusDashBoardState extends State<BonusDashBoard> {
+  bool isDollars = false;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DashBoardBloc, DashBoardState>(
       builder: (context, state) {
-       if (state is DashBoardLoadedState) {
+        if (state is DashBoardLoadedState) {
           BonusModelClass bonusModelClass = state.bonusModelClass;
           return Container(
             height: MediaQuery.of(context).size.height * 0.25,
@@ -30,7 +37,11 @@ class BonusDashBoard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        bonusModelClass.totalRUB.toString(),
+                        !isDollars
+                            ? NumberFormat.decimalPattern()
+                                .format(bonusModelClass.totalRUB)
+                            : NumberFormat.decimalPattern()
+                                .format(bonusModelClass.totalUSD),
                         style: const TextStyle(
                           color: Colors.black,
                           fontSize: 24,
@@ -38,48 +49,74 @@ class BonusDashBoard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 5),
-                      Container(
-                        height: 35,
-                        width: 35,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.black,
-                            style: BorderStyle.solid,
-                            width: 1,
+                      InkWell(
+                        onTap: () {
+                          if (isDollars == true) {
+                            setState(() {
+                              isDollars = false;
+                            });
+                          }
+                        },
+                        child: Container(
+                          height: 35,
+                          width: 35,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: !isDollars
+                                  ? Colors.black
+                                  : Colors.purple[200]!,
+                              style: BorderStyle.solid,
+                              width: 1,
+                            ),
                           ),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "RUB",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                          child: Center(
+                            child: Text(
+                              "RUB",
+                              style: TextStyle(
+                                color: !isDollars
+                                    ? Colors.black
+                                    : Colors.purple[200],
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                       ),
                       const SizedBox(width: 5),
-                      Container(
-                        height: 35,
-                        width: 35,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.purple[200]!,
-                            style: BorderStyle.solid,
-                            width: 1,
+                      InkWell(
+                        onTap: () {
+                          if (isDollars == false) {
+                            setState(() {
+                              isDollars = true;
+                            });
+                          }
+                        },
+                        child: Container(
+                          height: 35,
+                          width: 35,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: isDollars
+                                  ? Colors.black
+                                  : Colors.purple[200]!,
+                              style: BorderStyle.solid,
+                              width: 1,
+                            ),
                           ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "RUB",
-                            style: TextStyle(
-                              color: Colors.purple[200],
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                          child: Center(
+                            child: Text(
+                              "USD",
+                              style: TextStyle(
+                                color: isDollars
+                                    ? Colors.black
+                                    : Colors.purple[200],
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -147,7 +184,9 @@ class BonusDashBoard extends StatelessWidget {
                                 TextStyle(color: Colors.black54, fontSize: 13),
                           ),
                           Text(
-                            bonusModelClass.refillRUB.toString() + "₽",
+                            NumberFormat.decimalPattern()
+                                    .format(bonusModelClass.refillRUB) +
+                                " ₽",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 13,
@@ -157,7 +196,7 @@ class BonusDashBoard extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                       width: MediaQuery.of(context).size.width * 0.25,
+                        width: MediaQuery.of(context).size.width * 0.25,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,7 +207,9 @@ class BonusDashBoard extends StatelessWidget {
                                 TextStyle(color: Colors.black54, fontSize: 13),
                           ),
                           Text(
-                            bonusModelClass.refillUSD.toString() + "₽",
+                            NumberFormat.decimalPattern()
+                                    .format(bonusModelClass.refillUSD) +
+                                " ₽",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 13,

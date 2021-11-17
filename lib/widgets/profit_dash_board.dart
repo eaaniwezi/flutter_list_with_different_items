@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_list_with_different_items/bloc/dash_board_bloc.dart';
 import 'package:flutter_list_with_different_items/models/profit_model_class.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 class ProfitDashBoard extends StatelessWidget {
   const ProfitDashBoard({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class ProfitDashBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<DashBoardBloc, DashBoardState>(
       builder: (context, state) {
-     if (state is DashBoardLoadedState) {
+        if (state is DashBoardLoadedState) {
           ProfitModelClass profitModelClass = state.profitModelClass;
           String differences = profitModelClass.raise.toString();
           return Container(
@@ -29,7 +30,9 @@ class ProfitDashBoard extends StatelessWidget {
                 children: [
                   _firstColumn(),
                   Text(
-                    profitModelClass.total.toString() + "\$",
+                    NumberFormat.decimalPattern()
+                            .format(profitModelClass.total) +
+                        " \$",
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 24,
@@ -39,7 +42,9 @@ class ProfitDashBoard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        profitModelClass.raise.toString() + "%",
+                        NumberFormat.decimalPattern()
+                                .format(profitModelClass.raise) +
+                            "%",
                         style: TextStyle(
                           color: differences.contains("-")
                               ? Colors.red
@@ -56,7 +61,6 @@ class ProfitDashBoard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 25),
-          
                   const SizedBox(height: 20),
                   Row(
                     children: [
@@ -69,7 +73,9 @@ class ProfitDashBoard extends StatelessWidget {
                                 TextStyle(color: Colors.black54, fontSize: 13),
                           ),
                           Text(
-                            profitModelClass.invest.toString() + "\$",
+                            NumberFormat.decimalPattern()
+                                    .format(profitModelClass.invest) +
+                                " \$",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 13,
@@ -79,7 +85,7 @@ class ProfitDashBoard extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-       width: MediaQuery.of(context).size.width * 0.25,
+                        width: MediaQuery.of(context).size.width * 0.25,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +96,9 @@ class ProfitDashBoard extends StatelessWidget {
                                 TextStyle(color: Colors.black54, fontSize: 13),
                           ),
                           Text(
-                            profitModelClass.price.toString() + "\$",
+                            NumberFormat.decimalPattern()
+                                    .format(profitModelClass.price) +
+                                " \$",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 13,

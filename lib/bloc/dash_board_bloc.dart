@@ -5,7 +5,6 @@ import 'package:flutter_list_with_different_items/models/grade_model_class.dart'
 import 'package:flutter_list_with_different_items/models/profit_model_class.dart';
 import 'package:flutter_list_with_different_items/models/refill_model_class.dart';
 import 'package:flutter_list_with_different_items/repositories/dash_board_repository.dart';
-import 'package:logger/logger.dart';
 
 part 'dash_board_event.dart';
 part 'dash_board_state.dart';
@@ -37,8 +36,6 @@ class DashBoardBloc extends Bloc<DashBoardEvent, DashBoardState> {
             profitModelClass: profitModelClass,
             refillModelClass: refillModelClass);
       } catch (e) {
-        var log= Logger();
-        // log.d(e);
         yield DashBoardErrorState(error: e.toString());
       }
     }
