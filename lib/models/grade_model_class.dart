@@ -1,10 +1,10 @@
 class GradeModelClass {
-  double? total;
-  double? raise;
-  double? stock;
-  double? balanceUSD;
-  double? balanceRUB;
-  String? about;
+ dynamic total;
+ dynamic raise;
+ dynamic stock;
+  dynamic balanceUSD;
+ dynamic balanceRUB;
+ dynamic about;
 
   GradeModelClass({
     this.total,

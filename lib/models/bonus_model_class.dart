@@ -1,10 +1,10 @@
 class BonusModelClass {
-  double? totalRUB;
-  double? totalUSD;
-  double? refillUSD;
-  double? refillRUB;
-  int? team;
-  String? about;
+dynamic totalRUB;
+dynamic totalUSD;
+dynamic refillUSD;
+dynamic refillRUB;
+dynamic team;
+dynamic about;
 
   BonusModelClass({
     this.totalRUB,

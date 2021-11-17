@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_list_with_different_items">
+    <uses-permission android:name="android.permission.INTERNET"/>  
    <application
         android:label="flutter_list_with_different_items"
         android:icon="@mipmap/ic_launcher">

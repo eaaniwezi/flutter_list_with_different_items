@@ -1,9 +1,9 @@
 class ProfitModelClass {
-  double? total;
-  double? raise;
-  double? invest;
-  double? price;
-  String? about;
+ dynamic total;
+  dynamic raise;
+dynamic invest;
+ dynamic price;
+  dynamic about;
 
   ProfitModelClass({
     this.total,

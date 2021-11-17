@@ -1,9 +1,9 @@
 class RefillModelClass {
-  double? total;
-  double? withdrawn;
-  double? refillUSD;
-  double? refillRUB;
-  String? about;
+  dynamic total;
+  dynamic withdrawn;
+  dynamic refillUSD;
+  dynamic refillRUB;
+  dynamic about;
 
   RefillModelClass({
     this.total,

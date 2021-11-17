@@ -6,3 +6,5 @@ abstract class DashBoardEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class StartEvent extends DashBoardEvent {}
