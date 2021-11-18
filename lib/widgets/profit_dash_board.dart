@@ -17,7 +17,7 @@ class ProfitDashBoard extends StatelessWidget {
           ProfitModelClass profitModelClass = state.profitModelClass;
           String differences = profitModelClass.raise.toString();
           return Container(
-            height: MediaQuery.of(context).size.height * 0.25,
+ height: MediaQuery.of(context).size.height * 0.27,
             decoration: BoxDecoration(
               color: Colors.teal[50],
               borderRadius: BorderRadius.circular(20),

@@ -22,7 +22,7 @@ class _BonusDashBoardState extends State<BonusDashBoard> {
         if (state is DashBoardLoadedState) {
           BonusModelClass bonusModelClass = state.bonusModelClass;
           return Container(
-            height: MediaQuery.of(context).size.height * 0.25,
+            height: MediaQuery.of(context).size.height * 0.27,
             decoration: BoxDecoration(
               color: Colors.purple[100],
               borderRadius: BorderRadius.circular(20),

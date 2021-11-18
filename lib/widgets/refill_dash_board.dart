@@ -16,7 +16,7 @@ class RefillDashBoard extends StatelessWidget {
         if (state is DashBoardLoadedState) {
           RefillModelClass refillModelClass = state.refillModelClass;
           return Container(
-            height: MediaQuery.of(context).size.height * 0.25,
+            height: MediaQuery.of(context).size.height * 0.27,
             decoration: BoxDecoration(
               color: Colors.indigo[200],
               borderRadius: BorderRadius.circular(20),

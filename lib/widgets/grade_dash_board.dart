@@ -20,7 +20,7 @@ class GradeDashBoard extends StatelessWidget {
           var percentValue =
               (gradeModelClass.balanceUSD / gradeModelClass.total) * 1;
           return Container(
-            height: MediaQuery.of(context).size.height * 0.25,
+            height: MediaQuery.of(context).size.height * 0.27,
             decoration: BoxDecoration(
               color: Colors.teal[50],
               borderRadius: BorderRadius.circular(20),
@@ -67,7 +67,7 @@ class GradeDashBoard extends StatelessWidget {
                   Transform.rotate(
                     angle: 180 * math.pi / 180,
                     child: LinearPercentIndicator(
-                      width: MediaQuery.of(context).size.width * 0.85,
+                      width: MediaQuery.of(context).size.width * 0.84,
                       lineHeight: 16.0,
                       percent: percentValue,
                       backgroundColor: Colors.indigo,
